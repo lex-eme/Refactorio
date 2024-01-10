@@ -4,10 +4,14 @@
 
 #include "Player.h"
 #include "TileMap.h"
+#include "DebugScreen.h"
 
 class Engine {
 private:
 	sf::RenderWindow _window;
+#ifdef debugging
+	DebugScreen _debugScreen;
+#endif
 	sf::View _playerView;
 
 	Player _player;

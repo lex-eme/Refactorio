@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "DevelopState.h"
 
 void Engine::input() {
 	sf::Event event;
@@ -33,6 +34,13 @@ void Engine::input() {
 void Engine::update(float dt) {
 	_player.update(dt);
 	_playerView.setCenter(_player.getCenter());
+
+#ifdef debugging
+	_window.setView(_playerView);
+	_debugScreen.setPlayerPosition(_player.getCenter());
+	_debugScreen.setMouseWindowPosition(sf::Mouse::getPosition(_window));
+	_debugScreen.setMouseWorldPosition(_window.mapPixelToCoords(sf::Mouse::getPosition(_window)));
+#endif
 }
 
 void Engine::draw() {
@@ -42,7 +50,12 @@ void Engine::draw() {
     _window.draw(_map);
     _window.draw(_player);
 
+	_window.setView(_window.getDefaultView());
+#ifdef debugging
+	_window.draw(_debugScreen);
+#endif
     _window.display();
+
 }
 
 Engine::Engine() {
