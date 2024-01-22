@@ -13,6 +13,10 @@ void Engine::input() {
             if (event.key.code == sf::Keyboard::Escape) {
                 _window.close();
             }
+
+			if (event.key.code == sf::Keyboard::Space) {
+				_machine.toggle();
+			}
         }
 
 		if (event.type == sf::Event::Resized) {
@@ -32,6 +36,7 @@ void Engine::input() {
 }
 
 void Engine::update(float dt) {
+	_machine.update(dt);
 	_player.update(dt);
 	_playerView.setCenter(_player.getCenter());
 
@@ -40,6 +45,7 @@ void Engine::update(float dt) {
 	_debugScreen.setPlayerPosition(_player.getCenter());
 	_debugScreen.setMouseWindowPosition(sf::Mouse::getPosition(_window));
 	_debugScreen.setMouseWorldPosition(_window.mapPixelToCoords(sf::Mouse::getPosition(_window)));
+	_debugScreen.setFPS(1 / dt);
 #endif
 }
 
@@ -48,8 +54,10 @@ void Engine::draw() {
 
 	_window.setView(_playerView);
     _window.draw(_map);
-    _window.draw(_player);
 
+	_window.draw(_machine);
+	_window.draw(_player);
+	
 	_window.setView(_window.getDefaultView());
 #ifdef debugging
 	_window.draw(_debugScreen);
@@ -65,6 +73,7 @@ Engine::Engine() {
 	_map.load(sf::Vector2u(128, 128), 100, 100);
 
 	auto size = _map.getSize();
+	_machine.init(sf::Vector2f(size.x / 2, size.y / 2));
 	_player.init(sf::Vector2f(size.x / 2, size.y / 2));
 	
 	_playerView.setSize(sf::Vector2f(1920, 1080));

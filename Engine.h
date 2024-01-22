@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Player.h"
+#include "Machine.h"
 #include "TileMap.h"
 #include "DebugScreen.h"
 
@@ -15,6 +16,7 @@ private:
 	sf::View _playerView;
 
 	Player _player;
+	Machine _machine;
 	TileMap _map;
 
 	void input();

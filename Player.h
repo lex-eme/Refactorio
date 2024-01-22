@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Direction.h"
-#include "Animation.h"
+#include "DirectionalAnimation.h"
 
 class Player : public sf::Drawable {
 private:
@@ -15,7 +15,7 @@ private:
     bool _wasMoving = false;
     Direction _direction = Direction::SOUTH;
     int _animIndex = 0;
-    Animation _animations[2];
+    DirectionalAnimation _animations[2];
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

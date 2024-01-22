@@ -1,28 +1,25 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
-#include "Direction.h"
+#include <vector>
 
 class Animation {
-private:
-	const sf::Texture* _texture = nullptr;
-	Direction _direction = Direction::SOUTH;
-	sf::IntRect _frame;
-
-	float _frameDuration = 0.04f;
-	float _currentTime = 0.0f;
-	int _frameIndex = 0;
-	int _maxIndex = 0;
-
 public:
-	Animation() = default;
+	void start(bool loop = false);
+	void pause();
+	void stop();
+	void reset();
+	void update(float dt, sf::Sprite& sprite);
+	void init(const sf::Texture& texture, float frameDuration, unsigned int x, unsigned int y, sf::Sprite& sprite);
 
-	void init(const sf::Texture& texture, sf::Vector2i frameSize, float frameDuration, int framesInAnim);
+private:
+	bool _enabled = false;
+	bool _loop = false;
 
-	void applyFrame(sf::Sprite& sprite) const;
-	void applyTexture(sf::Sprite& sprite) const;
-
-	void update(Direction direction, float dt);
+	float _timeSinceLastFrame = 0.0f;
+	float _frameDuration = 1.0f;
+	unsigned int _frameIndex = 0;
+	std::vector<sf::IntRect> _frames;
+	
+	const sf::Texture* _texture = nullptr;
 };
-

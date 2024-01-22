@@ -1,34 +1,67 @@
 #include "Animation.h"
 
-void Animation::init(const sf::Texture& texture, sf::Vector2i frameSize, float frameDuration, int framesInAnim) {
-	_texture = &texture;
-	_frame = { 0, (int)_direction * frameSize.y, frameSize.x, frameSize.y };
-	_frameDuration = frameDuration;
-	_maxIndex = framesInAnim;
+void Animation::start(bool loop) {
+	_loop = loop;
+	_enabled = true;
 }
 
-void Animation::applyFrame(sf::Sprite& sprite) const {
-	sprite.setTextureRect(_frame);
+void Animation::pause() {
+	_enabled = false;
 }
 
-void Animation::applyTexture(sf::Sprite& sprite) const {
-	sprite.setTexture(*_texture);
+void Animation::stop() {
+	_enabled = false;
+	reset();
 }
 
-void Animation::update(Direction direction, float dt) {
-	_currentTime += dt;
+void Animation::reset() {
+	_frameIndex = 0;
+	_timeSinceLastFrame = 0.0f;
+}
 
-	if (_direction != direction) {
-		_direction = direction;
-		_frame.top = (int)direction * _frame.height;
+void Animation::update(float dt, sf::Sprite& sprite) {
+	if (!_enabled) {
+		return;
 	}
 
-	while (_currentTime >= _frameDuration) {
+	_timeSinceLastFrame += dt;
+
+	while (_timeSinceLastFrame >= _frameDuration) {
 		_frameIndex += 1;
-		_frameIndex = _frameIndex % _maxIndex;
+		_timeSinceLastFrame -= _frameDuration;
 
-		_frame.left = _frameIndex * _frame.width;
+		if (_frameIndex >= _frames.size()) {
+			if (_loop) {
+				_frameIndex = 0;
+			} else {
+				_enabled = false;
+				reset();
+			}
+		}
 
-		_currentTime -= _frameDuration;
+		sprite.setTextureRect(_frames[_frameIndex]);
 	}
+}
+
+void Animation::init(const sf::Texture& texture, float frameDuration, unsigned int x, unsigned int y, sf::Sprite& sprite) {
+	_texture = &texture;
+	_frameDuration = frameDuration;
+
+	sf::Vector2u size = texture.getSize();
+	sf::Vector2i frameSize(size.x / x, size.y / y);
+
+	_frames.resize(x * y);
+
+	for (unsigned int i = 0; i < _frames.size(); ++i) {
+		int _x = i % x;
+		int _y = i / x;
+		_frames[i].left = _x * frameSize.x;
+		_frames[i].top = _y * frameSize.y;
+		_frames[i].width = frameSize.x;
+		_frames[i].height = frameSize.y;
+	}
+
+	sprite.setTexture(texture);
+	sprite.setTextureRect(_frames[_frameIndex]);
+	sprite.setOrigin(frameSize.x / 2.0f, frameSize.y / 2.0f);
 }

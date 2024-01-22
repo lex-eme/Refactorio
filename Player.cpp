@@ -2,8 +2,8 @@
 #include "TextureHolder.h"
 
 Player::Player() {
-    _animations[0].init(TextureHolder::getTexture("graphics/idle.png"), sf::Vector2i(92, 116), 0.1f, 22);
-    _animations[1].init(TextureHolder::getTexture("graphics/running.png"), sf::Vector2i(88, 132), 0.04f, 22);
+    _animations[0].init(TextureHolder::getTexture("graphics/idle.png"), 0.1f, 22, 8, _sprite);
+    _animations[1].init(TextureHolder::getTexture("graphics/running.png"), 0.04f, 22, 8, _sprite);
 
     _animations[_animIndex].applyTexture(_sprite);
     _animations[_animIndex].applyFrame(_sprite);
@@ -103,7 +103,7 @@ void Player::update(float dt) {
         }
     }
 
-    _animations[_animIndex].update(_direction, dt);
+    _animations[_animIndex].update(_direction, dt, _sprite);
     _animations[_animIndex].applyFrame(_sprite);
     _wasMoving = _moving;
 }
@@ -113,7 +113,5 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 sf::Vector2f Player::getCenter() const {
-    return sf::Vector2f(
-		_position.x + _sprite.getGlobalBounds().width / 2,
-		_position.y + _sprite.getGlobalBounds().height / 2);
+    return sf::Vector2f(_position.x, _position.y);
 }

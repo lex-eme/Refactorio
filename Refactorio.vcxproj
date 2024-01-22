@@ -134,7 +134,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="DirectionalAnimation.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
+    <ClCompile Include="Machine.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Refactorio.cpp" />
@@ -143,8 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="DirectionalAnimation.h" />
     <ClInclude Include="DebugScreen.h" />
     <ClInclude Include="DevelopState.h" />
+    <ClInclude Include="Machine.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Engine.h" />
