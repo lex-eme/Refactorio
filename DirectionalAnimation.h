@@ -4,25 +4,17 @@
 #include <vector>
 
 #include "Direction.h"
+#include "Animation.h"
 
-class DirectionalAnimation {
-private:
-	const sf::Texture* _texture = nullptr;
-	Direction _direction = Direction::SOUTH;
-
-	float _frameDuration = 0.04f;
-	float _currentTime = 0.0f;
-	int _frameIndex = 0;
-	int _maxIndex = 0;
-	std::vector<sf::IntRect> _frames;
-
+class DirectionalAnimation : public Animation {
 public:
-	DirectionalAnimation() = default;
-
-	void init(const sf::Texture& texture, float frameDuration, unsigned int x, unsigned int y, sf::Sprite& sprite);
-
-	void applyFrame(sf::Sprite& sprite) const;
+	void setDirection(Direction direction, sf::Sprite sprite);
 	void applyTexture(sf::Sprite& sprite) const;
 
-	void update(Direction direction, float dt, sf::Sprite& sprite);
+private:
+	Direction _direction = Direction::SOUTH;
+	unsigned int _maxIndex = 22; // How to set this up?
+
+	int endIndex() const override;
+	int restartIndex() const override;
 };

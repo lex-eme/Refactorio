@@ -1,17 +1,13 @@
 #include "Player.h"
 #include "TextureHolder.h"
 
-Player::Player() {
-    _animations[0].init(TextureHolder::getTexture("graphics/idle.png"), 0.1f, 22, 8, _sprite);
-    _animations[1].init(TextureHolder::getTexture("graphics/running.png"), 0.04f, 22, 8, _sprite);
-
-    _animations[_animIndex].applyTexture(_sprite);
-    _animations[_animIndex].applyFrame(_sprite);
-}
-
 void Player::init(sf::Vector2f position) {
     _position = position;
     _sprite.setPosition(_position);
+    _animations[1].init(TextureHolder::getTexture("graphics/running.png"), 0.04f, 22, 8, _sprite);
+    _animations[0].init(TextureHolder::getTexture("graphics/idle.png"), 0.1f, 22, 8, _sprite);
+    _animations[0].start(true);
+    _animations[1].start(true);
 }
 
 void Player::handleInput() {
@@ -103,8 +99,8 @@ void Player::update(float dt) {
         }
     }
 
-    _animations[_animIndex].update(_direction, dt, _sprite);
-    _animations[_animIndex].applyFrame(_sprite);
+    _animations[_animIndex].update(dt, _sprite);
+    _animations[_animIndex].setDirection(_direction, _sprite);
     _wasMoving = _moving;
 }
 

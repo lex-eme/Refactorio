@@ -12,7 +12,10 @@ public:
 	void update(float dt, sf::Sprite& sprite);
 	void init(const sf::Texture& texture, float frameDuration, unsigned int x, unsigned int y, sf::Sprite& sprite);
 
-private:
+protected:
+	virtual int endIndex() const;
+	virtual int restartIndex() const;
+
 	bool _enabled = false;
 	bool _loop = false;
 

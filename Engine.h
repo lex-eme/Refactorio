@@ -8,6 +8,10 @@
 #include "DebugScreen.h"
 
 class Engine {
+public:
+	Engine();
+	void run();
+
 private:
 	sf::RenderWindow _window;
 #ifdef debugging
@@ -22,9 +26,5 @@ private:
 	void input();
 	void update(float dt);
 	void draw();
-
-public:
-	Engine();
-	void run();
 };
 

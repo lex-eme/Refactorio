@@ -15,7 +15,7 @@ void Animation::stop() {
 }
 
 void Animation::reset() {
-	_frameIndex = 0;
+	_frameIndex = restartIndex();
 	_timeSinceLastFrame = 0.0f;
 }
 
@@ -25,17 +25,16 @@ void Animation::update(float dt, sf::Sprite& sprite) {
 	}
 
 	_timeSinceLastFrame += dt;
-
 	while (_timeSinceLastFrame >= _frameDuration) {
 		_frameIndex += 1;
 		_timeSinceLastFrame -= _frameDuration;
 
-		if (_frameIndex >= _frames.size()) {
+		if (_frameIndex >= endIndex()) {
 			if (_loop) {
-				_frameIndex = 0;
+				_frameIndex = restartIndex();
 			} else {
-				_enabled = false;
-				reset();
+				stop();
+				return;
 			}
 		}
 
@@ -61,7 +60,16 @@ void Animation::init(const sf::Texture& texture, float frameDuration, unsigned i
 		_frames[i].height = frameSize.y;
 	}
 
+	_frameIndex = restartIndex();
 	sprite.setTexture(texture);
 	sprite.setTextureRect(_frames[_frameIndex]);
 	sprite.setOrigin(frameSize.x / 2.0f, frameSize.y / 2.0f);
+}
+
+int Animation::endIndex() const {
+	return _frames.size();
+}
+
+int Animation::restartIndex() const {
+	return 0;
 }
