@@ -57,7 +57,7 @@ void Engine::draw() {
 
 	_window.draw(_machine);
 	_window.draw(_player);
-	
+
 	_window.setView(_window.getDefaultView());
 #ifdef debugging
 	_window.draw(_debugScreen);
@@ -78,8 +78,6 @@ Engine::Engine() {
 	
 	_playerView.setSize(sf::Vector2f(1920, 1080));
 	_playerView.setCenter(_player.getCenter());
-	
-	_window.setView(_playerView);
 }
 
 void Engine::run() {

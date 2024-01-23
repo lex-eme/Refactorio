@@ -2,11 +2,11 @@
 
 enum class Direction {
     NORTH,
-    NORTH_WEST,
-    WEST,
-    SOUTH_WEST,
-    SOUTH,
-    SOUTH_EAST,
+    NORTH_EAST,
     EAST,
-    NORTH_EAST
+    SOUTH_EAST,
+    SOUTH,
+    SOUTH_WEST,
+    WEST,
+    NORTH_WEST
 };

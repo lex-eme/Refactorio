@@ -30,24 +30,24 @@ void Player::handleInput() {
 
     if (up) {
         if (left) {
-            _direction = Direction::NORTH_EAST;
-        } else if (right) {
             _direction = Direction::NORTH_WEST;
+        } else if (right) {
+            _direction = Direction::NORTH_EAST;
         } else {
             _direction = Direction::NORTH;
         }
     } else if (down) {
         if (left) {
-            _direction = Direction::SOUTH_EAST;
-        } else if (right) {
             _direction = Direction::SOUTH_WEST;
+        } else if (right) {
+            _direction = Direction::SOUTH_EAST;
         } else {
             _direction = Direction::SOUTH;
         }
     } else if (left) {
-        _direction = Direction::EAST;
-    } else if (right) {
         _direction = Direction::WEST;
+    } else if (right) {
+        _direction = Direction::EAST;
     } else {
         _moving = false;
     }
@@ -64,28 +64,28 @@ void Player::update(float dt) {
             case Direction::NORTH:
                 _position.y -= _speed * dt;
                 break;
-            case Direction::NORTH_WEST:
+            case Direction::NORTH_EAST:
                 _position.x += _speed * 0.8f * dt;
                 _position.y -= _speed * 0.8f * dt;
                 break;
-            case Direction::WEST:
+            case Direction::EAST:
                 _position.x += _speed * dt;
                 break;
-            case Direction::SOUTH_WEST:
+            case Direction::SOUTH_EAST:
                 _position.x += _speed * 0.8f * dt;
                 _position.y += _speed * 0.8f * dt;
                 break;
             case Direction::SOUTH:
                 _position.y += _speed * dt;
                 break;
-            case Direction::SOUTH_EAST:
+            case Direction::SOUTH_WEST:
                 _position.x -= _speed * 0.8f * dt;
                 _position.y += _speed * 0.8f * dt;
                 break;
-            case Direction::EAST:
+            case Direction::WEST:
                 _position.x -= _speed * dt;
                 break;
-            case Direction::NORTH_EAST:
+            case Direction::NORTH_WEST:
                 _position.x -= _speed * 0.8f * dt;
                 _position.y -= _speed * 0.8f * dt;
                 break;
